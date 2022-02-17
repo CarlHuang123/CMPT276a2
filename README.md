@@ -1,3 +1,3 @@
 # CMPT276a2
 changed index.js, detail.ejs, index.ejs, mydatabase.html                                                                                                                                                            
-the whole files changed uploaded in another branch
+the files that contains changed files uploaded in another branch (include changed index.js, detail.ejs, index.ejs, mydatabase.html )
