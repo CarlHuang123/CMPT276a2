@@ -65,11 +65,16 @@ app.get('/:id', async (req, res) => {
   const rectangle = await Rectangle.findByPk(id)
   return res.render('pages/detail', {rectangle})
 })
-app.get('/rectangles', async (req, res) => {
+app.get('/:id/update', async (req, res) => {
+  const id = req.params.id
+  const rectangle = await Rectangle.findByPk(id)
+  return res.render('pages/update', {rectangle})
+})
+app.get('/api/rectangles', async (req, res) => {
   const rectangles = await Rectangle.findAll()
   return res.json({ results: rectangles })
 })
-app.post('/rectangles', async (req, res) => {
+app.post('/api/rectangles', async (req, res) => {
   const rectangle = req.body
   if (!rectangle.name) {
     return res.status(400).send('missing name')
@@ -91,7 +96,33 @@ app.post('/rectangles', async (req, res) => {
     return res.status(500).json({ success: false, message: e.message })
   }
 })
-app.delete('/rectangles/:id', async (req, res) => {
+app.put('/api/rectangles/:id', async (req,res)=>{
+  const rectangle = req.body
+  if (!rectangle.name) {
+    return res.status(400).send('missing name')
+  }
+  if (!rectangle.color) {
+    return res.status(400).send('missing color')
+  }
+  if (!rectangle.height) {
+    return res.status(400).send('missing height')
+  }
+  if (!rectangle.width) {
+    return res.status(400).send('missing width')
+  }
+  const [saved] = await Rectangle.update(rectangle, {
+    where: {
+      id:req.params.id
+    }
+  });
+  if(saved){
+    return res.json({ success: true})
+  }
+  else{
+    return res.json({ success: false})
+  }
+})
+app.delete('/api/rectangles/:id', async (req, res) => {
   const id = req.params.id
   const rectangle = await Rectangle.findByPk(id)
 

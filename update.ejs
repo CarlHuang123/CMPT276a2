@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mydb</title>
+    </head>
+    <body>
+        <center>
+            <h1 style="text-align:center ;">
+                please enter the info about rectangle
+            </h1>
+            <form id="create_rectangle">
+                <input type="text" name="name" value="" placeholder="name of rectangles">
+                <br>
+                <input type="text" name="color" value="" placeholder="color">
+                <br>
+                <input type="number" name="height" value="" placeholder="height(px)">
+                <br>
+                <input type="number" name="width" value="" placeholder="width(px)">
+                <br>
+                <br>
+                <input type="submit" name="sub" value="update">
+            </form>
+        <br>
+        <button onclick="window.location.href = '/database'">Showalldata</button>
+        <p class="feedback"></p>
+        </center>
+    </body>
+    <script>
+        const form = document.getElementById('create_rectangle')
+
+        const create = async (e) => {
+            e.preventDefault()
+
+            const data = new FormData(form)
+
+            const res = await fetch('/api/rectangles/<%- rectangle.id %>', {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(data))
+            })
+
+            const json = await res.json()
+
+            if (json.success) {
+                document.querySelector('.feedback').textContent = 'Successfully updated'
+            } else {
+                document.querySelector('.feedback').textContent = 'Failed!!!!!'
+            }
+        }
+        
+        form.addEventListener('submit', create)
+    </script>
+</html>

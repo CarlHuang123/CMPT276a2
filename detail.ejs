@@ -33,12 +33,14 @@
   </table>
   <br>
   <button id="delete">Delete</button>
+  <br>
+  <a href="/<%- rectangle.id %>/update">update</button>
   </div>
   <script>
 
     const button = document.getElementById('delete')
     button.addEventListener('click', async () => {
-      const res = await fetch('/rectangles/<%- rectangle.id %>', {
+      const res = await fetch('/api/rectangles/<%- rectangle.id %>', {
         method: 'DELETE'
       })
       const json = await res.json()
